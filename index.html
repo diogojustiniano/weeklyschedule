@@ -503,6 +503,20 @@
     line-height: 1.55;
   }
 
+  .combo-section-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 14px 0;
+    margin-bottom: 4px;
+    border-top: 1px dashed var(--rule);
+    border-bottom: 1px dashed var(--rule);
+    text-align: center;
+    font-weight: 500;
+  }
+
   .coach-note::before {
     content: 'Coach ';
     font-family: 'JetBrains Mono', monospace;
@@ -954,88 +968,104 @@
 const START_DATE = new Date('2026-04-20');
 const RACE_DATE  = new Date('2026-10-17');
 
-// Lift day templates (compound-focused)
+// Lift day templates (user's custom split)
 const LIFT_PUSH = {
-  name: "Push + Core",
+  name: "Upper Body Push",
   type: "strength",
   duration: "45 min",
-  focus: "Chest · Shoulders · Triceps · Core",
+  focus: "Chest · Shoulders · Triceps",
   groups: [
     { title: "Warm-up", items: [
-      { name: "Row ergo or bike", sets: "5 min", note: "Easy pace, raise HR" },
-      { name: "Dynamic mobility", sets: "5 min", note: "Shoulder circles, thoracic rotations, hip openers" }
+      { name: "Row ergo or bike", sets: "5 min", note: "Easy pace, raise HR post-run" },
+      { name: "Dynamic shoulder mobility", sets: "5 min", note: "Shoulder circles, band pull-aparts, thoracic rotations" }
     ]},
-    { title: "Main Lift", items: [
-      { name: "Barbell Bench Press", sets: "4×6", note: "Add 2.5kg when all reps complete with good form" },
-      { name: "Overhead Press", sets: "3×8", note: "Strict · no knee drive" }
+    { title: "Main Work", items: [
+      { name: "DB Bench Press", sets: "4 × 8–12", note: "90s rest · flat bench, full ROM" },
+      { name: "DB Incline Press", sets: "3 × 10–12", note: "75s rest · 30-degree angle" },
+      { name: "DB Shoulder Press", sets: "3 × 10–12", note: "75s rest · seated or standing" }
     ]},
-    { title: "Accessory", items: [
-      { name: "Dumbbell Incline Press", sets: "3×10", note: "Pause 1s at bottom" },
-      { name: "Dips", sets: "3×8–12", note: "Weighted if able" },
-      { name: "Lateral Raises", sets: "3×15", note: "Light · slow tempo" },
-      { name: "Tricep Rope Pushdown", sets: "3×12", note: "" }
+    { title: "Accessory (Cables)", items: [
+      { name: "Cable Lateral Raises", sets: "3 × 12–15", note: "60s rest · Polea machine, slow eccentric" },
+      { name: "Cable Tricep Pushdown", sets: "3 × 12–15", note: "60s rest · rope or bar attachment" }
     ]},
-    { title: "Core Finisher", items: [
-      { name: "Plank", sets: "3×45s", note: "Straight line head to heels" },
-      { name: "Hanging Knee Raise", sets: "3×10", note: "No swinging" }
+    { title: "Finisher", items: [
+      { name: "Push-Ups (to failure)", sets: "2 × AMRAP", note: "60s rest · stop 1 rep before form breaks" }
     ]}
   ],
-  note: "Form over weight. If your form breaks, the set is over. The point is being on the start line healthy."
+  note: "Post-run session. Don't ego-lift on a day your legs have already worked. Form over weight — if form breaks, the set is over."
 };
 
 const LIFT_PULL = {
-  name: "Pull + Legs Light",
+  name: "Upper Body Pull",
   type: "strength",
   duration: "45 min",
-  focus: "Back · Biceps · Posterior Chain",
+  focus: "Back · Biceps · Rear Delts · Core",
   groups: [
     { title: "Warm-up", items: [
       { name: "Row ergo", sets: "5 min", note: "Easy" },
-      { name: "Band pull-aparts", sets: "2×20", note: "Scap activation" }
+      { name: "Band pull-aparts", sets: "2 × 20", note: "Scap activation" }
     ]},
-    { title: "Main Lift", items: [
-      { name: "Deadlift (conventional)", sets: "4×5", note: "Form first · brace core · no rounding" },
-      { name: "Pull-ups or Lat Pulldown", sets: "4×8", note: "Weighted or assisted as needed" }
+    { title: "Main Work", items: [
+      { name: "DB Bent-Over Rows", sets: "4 × 8–12", note: "90s rest · each arm, squeeze at top" },
+      { name: "Cable Lat Pulldown", sets: "4 × 10–12", note: "75s rest · Polea machine, wide grip" }
     ]},
     { title: "Accessory", items: [
-      { name: "Barbell Row", sets: "3×10", note: "Strict · pause at top" },
-      { name: "Face Pulls", sets: "3×15", note: "Rear delt focus" },
-      { name: "Dumbbell Curl", sets: "3×12", note: "Yes, the 20kg goal — progress to it" },
-      { name: "Hammer Curl", sets: "3×12", note: "" }
-    ]},
-    { title: "Core Finisher", items: [
-      { name: "Farmer's Carry", sets: "3×40m", note: "Heavy as you can hold" },
-      { name: "Dead Bug", sets: "3×10 each side", note: "Slow · controlled" }
+      { name: "Cable Face Pulls", sets: "3 × 15–20", note: "60s rest · light weight, control" },
+      { name: "DB Bicep Curls", sets: "3 × 10–12", note: "60s rest · alternating or simultaneous · 20kg target" },
+      { name: "DB Hammer Curls", sets: "3 × 10–12", note: "60s rest · targets brachialis" },
+      { name: "Cable Rear Delt Fly", sets: "3 × 12–15", note: "60s rest · Polea, light and controlled" }
     ]}
   ],
-  note: "Pull day is non-negotiable for runners. Strong posterior chain prevents IT band + hip issues on long runs."
+  note: "Pull day. Strong posterior chain prevents IT band and hip issues on long runs. No run today — full recovery for legs."
+};
+
+const CORE_BLOCK = {
+  name: "Core & Abs",
+  type: "strength",
+  duration: "25 min",
+  focus: "Core stability · rotational strength",
+  groups: [
+    { title: "Core Circuit", items: [
+      { name: "Dead Bugs", sets: "3 × 12/side", note: "45s rest · slow, controlled, back flat" },
+      { name: "Cable Woodchops", sets: "3 × 12/side", note: "60s rest · Polea machine, rotational" },
+      { name: "Lying Leg Raises", sets: "3 × 12–15", note: "60s rest · floor-based, controlled · no low-back arching" },
+      { name: "Plank Hold", sets: "3 × 45–60s", note: "Squeeze glutes, neutral spine" },
+      { name: "Bicycle Crunches", sets: "3 × 20/side", note: "45s rest · controlled, no momentum" },
+      { name: "Ab Wheel Rollouts", sets: "3 × 8–12", note: "60s rest · full extension, exhale hard · kneeling if needed" }
+    ]}
+  ],
+  note: "Post-run core work. Your midline is what holds form together at km 35 of the marathon. Train it like it matters — because it does."
 };
 
 const LIFT_FULL = {
-  name: "Full Body",
+  name: "Lower Body",
   type: "strength",
-  duration: "45 min",
-  focus: "Squat day · legs + full body",
+  duration: "50 min",
+  focus: "Legs · Glutes · Posterior Chain",
   groups: [
     { title: "Warm-up", items: [
       { name: "Bike or walk", sets: "5 min", note: "Easy" },
-      { name: "Bodyweight squats + lunges", sets: "2×10", note: "Full range" }
+      { name: "Bodyweight squats + lunges", sets: "2 × 10", note: "Full range · wake up hips" }
     ]},
-    { title: "Main Lift", items: [
-      { name: "Back Squat", sets: "4×5", note: "Bodyweight target = 100kg × 5. Add 2.5kg when all reps clean." }
+    { title: "Main Work", items: [
+      { name: "DB Goblet Squats", sets: "4 × 10–12", note: "90s rest · heavy DB, deep squat · target bodyweight squat × 5" },
+      { name: "DB Romanian Deadlifts", sets: "4 × 10–12", note: "90s rest · slow eccentric, hinge at hips" }
     ]},
     { title: "Accessory", items: [
-      { name: "Romanian Deadlift", sets: "3×8", note: "Hamstring focus · light-moderate" },
-      { name: "Walking Lunges", sets: "3×10 each leg", note: "Dumbbells" },
-      { name: "Goblet Squat", sets: "3×12", note: "Depth · control" },
-      { name: "Calf Raises", sets: "3×15", note: "Pause at top" }
+      { name: "DB Walking Lunges", sets: "3 × 12/leg", note: "75s rest · long stride, upright torso" },
+      { name: "DB Reverse Lunges", sets: "3 × 10/leg", note: "60s rest · drive through heel · gentler on knees than step-ups" },
+      { name: "Cable Pull-Throughs", sets: "3 × 12–15", note: "60s rest · glute activation" },
+      { name: "DB Calf Raises", sets: "3 × 15–20", note: "60s rest · on step if available, pause at top" }
     ]},
-    { title: "Core + Mobility", items: [
-      { name: "Hip flexor stretch", sets: "2×60s each", note: "Critical for runners" },
-      { name: "Pigeon pose", sets: "2×60s each", note: "Deep breathing" }
+    { title: "Mobility (15 min)", items: [
+      { name: "Hip flexor stretch", sets: "2 × 60s each", note: "Critical for runners — most overlooked" },
+      { name: "Pigeon pose", sets: "2 × 60s each", note: "Deep breathing · glute + hip opener" },
+      { name: "Hamstring stretch", sets: "2 × 60s each", note: "Seated or standing" },
+      { name: "Calf stretch on wall", sets: "2 × 45s each", note: "Straight leg + bent knee variations" },
+      { name: "Thoracic spine opener", sets: "2 × 60s", note: "Foam roller or cat-cow" }
     ]}
   ],
-  note: "Squat is your compound lift benchmark. Don't chase deadlift numbers at the cost of run recovery."
+  note: "Friday leg day. By Saturday's long run your legs need to be awake but not destroyed. Go 80% intensity max."
 };
 
 // Run templates
@@ -1158,8 +1188,21 @@ const RACE_DAY = {
 };
 
 // Rest days
-const REST = { rest: true, title: "Rest · or walk", body: "Walking is fine. Running is not. Legs recover, mind resets. Protect this day — it's what makes the other days possible." };
+const REST = { rest: true, title: "Rest day", body: "Walking is fine. Running is not. Legs recover, mind resets. Protect this day — it's what makes the other days possible." };
 const WALK = { rest: true, title: "Active recovery walk", body: "30–45 min easy walk. Ideally with Catarina. No phone if you can manage it. The nervous system needs unstructured time." };
+const FULL_REST = { rest: true, title: "Full Rest", body: "No training. No gym. Prioritise sleep, nutrition, and recovery. This is when the body actually adapts to the work you did all week. Skipping rest is how you get injured in week 15." };
+const FRI_MOBILITY = { rest: true, title: "Easy Run + Mobility", body: "See today's easy run in Training. Follow with 15 min mobility: hip flexors, hamstrings, calves, thoracic spine. Legs should be fresh for Saturday's long run." };
+
+// Combo day: run + strength in one workout card
+const combo = (runWorkout, liftWorkout, title) => ({
+  type: "combo",
+  name: title,
+  focus: `${runWorkout.focus} + ${liftWorkout.focus}`,
+  duration: `${runWorkout.duration.replace('Zone 2 · conversational', '~' + Math.round(parseInt(runWorkout.focus) * 7.2) + ' min')} run + ${liftWorkout.duration} lift`,
+  runWorkout: runWorkout,
+  liftWorkout: liftWorkout,
+  note: "Run first, lift second. Short transition: rehydrate, 10g carb, then into the gym. Don't go heavy on legs today — your run already taxed them."
+});
 const TEST_10K = run(
   "10K Test Race",
   "Benchmark · week 8",
@@ -1173,37 +1216,38 @@ const TEST_10K = run(
 );
 
 // Weeks: 1 = week of Apr 20
+// Split: Mon Run+Push · Tue Pull · Wed Run+Core · Thu Lower · Fri Easy Run+Mobility · Sat Long Run · Sun Rest
 const weeks = [
-  // PHASE 1 — Base Build
-  { n: 1, start: "Apr 20", phase: 1, mileage: 18, days: { mon: LIFT_PUSH, tue: EASY_Z2(5), wed: LIFT_PULL, thu: EASY_Z2(5), fri: LIFT_FULL, sat: LONG_RUN(8, 1), sun: WALK } },
-  { n: 2, start: "Apr 27", phase: 1, mileage: 22, days: { mon: LIFT_PUSH, tue: EASY_Z2(6), wed: LIFT_PULL, thu: EASY_Z2(6), fri: LIFT_FULL, sat: LONG_RUN(10, 2), sun: WALK } },
-  { n: 3, start: "May 04", phase: 1, mileage: 26, days: { mon: LIFT_PUSH, tue: EASY_Z2(7), wed: LIFT_PULL, thu: EASY_Z2(7), fri: LIFT_FULL, sat: LONG_RUN(12, 3), sun: WALK } },
-  { n: 4, start: "May 11", phase: 1, mileage: 20, days: { mon: LIFT_PUSH, tue: EASY_Z2(5), wed: LIFT_PULL, thu: EASY_Z2(5), fri: REST, sat: LONG_RUN(10, 4), sun: WALK }, cutback: true },
-  { n: 5, start: "May 18", phase: 1, mileage: 30, days: { mon: LIFT_PUSH, tue: EASY_Z2(8), wed: LIFT_PULL, thu: EASY_Z2(8), fri: LIFT_FULL, sat: LONG_RUN(14, 5), sun: WALK } },
-  { n: 6, start: "May 25", phase: 1, mileage: 32, days: { mon: LIFT_PUSH, tue: EASY_Z2(8), wed: LIFT_PULL, thu: EASY_Z2(8), fri: LIFT_FULL, sat: LONG_RUN(16, 6), sun: WALK } },
-  { n: 7, start: "Jun 01", phase: 1, mileage: 36, days: { mon: LIFT_PUSH, tue: EASY_Z2(9), wed: LIFT_PULL, thu: EASY_Z2(9), fri: LIFT_FULL, sat: LONG_RUN(18, 7), sun: WALK } },
-  { n: 8, start: "Jun 08", phase: 1, mileage: 24, days: { mon: LIFT_PUSH, tue: EASY_Z2(6), wed: LIFT_PULL, thu: EASY_Z2(6), fri: REST, sat: TEST_10K, sun: WALK }, cutback: true },
+  // PHASE 1 — Base Build (no hard run yet; Wed is easy Z2 + core)
+  { n: 1, start: "Apr 20", phase: 1, mileage: 18, days: { mon: combo(EASY_Z2(4), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(EASY_Z2(4), CORE_BLOCK, "Run + Core"), thu: LIFT_FULL, fri: EASY_Z2(3), sat: LONG_RUN(7, 1), sun: FULL_REST } },
+  { n: 2, start: "Apr 27", phase: 1, mileage: 22, days: { mon: combo(EASY_Z2(5), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(EASY_Z2(4), CORE_BLOCK, "Run + Core"), thu: LIFT_FULL, fri: EASY_Z2(4), sat: LONG_RUN(9, 2), sun: FULL_REST } },
+  { n: 3, start: "May 04", phase: 1, mileage: 26, days: { mon: combo(EASY_Z2(5), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(EASY_Z2(5), CORE_BLOCK, "Run + Core"), thu: LIFT_FULL, fri: EASY_Z2(5), sat: LONG_RUN(11, 3), sun: FULL_REST } },
+  { n: 4, start: "May 11", phase: 1, mileage: 20, days: { mon: combo(EASY_Z2(4), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: REST, thu: LIFT_FULL, fri: EASY_Z2(4), sat: LONG_RUN(10, 4), sun: FULL_REST }, cutback: true },
+  { n: 5, start: "May 18", phase: 1, mileage: 30, days: { mon: combo(EASY_Z2(6), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(EASY_Z2(6), CORE_BLOCK, "Run + Core"), thu: LIFT_FULL, fri: EASY_Z2(5), sat: LONG_RUN(13, 5), sun: FULL_REST } },
+  { n: 6, start: "May 25", phase: 1, mileage: 32, days: { mon: combo(EASY_Z2(6), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(EASY_Z2(6), CORE_BLOCK, "Run + Core"), thu: LIFT_FULL, fri: EASY_Z2(6), sat: LONG_RUN(14, 6), sun: FULL_REST } },
+  { n: 7, start: "Jun 01", phase: 1, mileage: 36, days: { mon: combo(EASY_Z2(7), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(EASY_Z2(7), CORE_BLOCK, "Run + Core"), thu: LIFT_FULL, fri: EASY_Z2(6), sat: LONG_RUN(16, 7), sun: FULL_REST } },
+  { n: 8, start: "Jun 08", phase: 1, mileage: 24, days: { mon: combo(EASY_Z2(5), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: REST, thu: LIFT_FULL, fri: EASY_Z2(4), sat: TEST_10K, sun: FULL_REST }, cutback: true },
 
-  // PHASE 2 — Build Block
-  { n: 9,  start: "Jun 15", phase: 2, mileage: 38, days: { mon: LIFT_PUSH, tue: INTERVAL_400, wed: LIFT_PULL, thu: EASY_Z2(8), fri: LIFT_FULL, sat: LONG_RUN(20, 9), sun: WALK } },
-  { n: 10, start: "Jun 22", phase: 2, mileage: 40, days: { mon: LIFT_PUSH, tue: TEMPO(5), wed: LIFT_PULL, thu: EASY_Z2(8), fri: LIFT_FULL, sat: LONG_RUN(22, 10), sun: WALK } },
-  { n: 11, start: "Jun 29", phase: 2, mileage: 44, days: { mon: LIFT_PUSH, tue: INTERVAL_800, wed: LIFT_PULL, thu: EASY_Z2(9), fri: LIFT_FULL, sat: LONG_RUN(24, 11), sun: WALK } },
-  { n: 12, start: "Jul 06", phase: 2, mileage: 28, days: { mon: LIFT_PUSH, tue: EASY_Z2(6), wed: LIFT_PULL, thu: EASY_Z2(6), fri: REST, sat: LONG_RUN(16, 12), sun: WALK }, cutback: true },
-  { n: 13, start: "Jul 13", phase: 2, mileage: 47, days: { mon: LIFT_PUSH, tue: TEMPO(6), wed: LIFT_PULL, thu: EASY_Z2(10), fri: LIFT_FULL, sat: LONG_RUN(26, 13), sun: WALK } },
-  { n: 14, start: "Jul 20", phase: 2, mileage: 50, days: { mon: LIFT_PUSH, tue: INTERVAL_1K, wed: LIFT_PULL, thu: EASY_Z2(10), fri: LIFT_FULL, sat: LONG_RUN(28, 14), sun: WALK } },
-  { n: 15, start: "Jul 27", phase: 2, mileage: 52, days: { mon: LIFT_PUSH, tue: TEMPO(8), wed: LIFT_PULL, thu: EASY_Z2(10), fri: LIFT_FULL, sat: LONG_RUN(30, 15), sun: WALK } },
-  { n: 16, start: "Aug 03", phase: 2, mileage: 34, days: { mon: LIFT_PUSH, tue: EASY_Z2(7), wed: LIFT_PULL, thu: EASY_Z2(7), fri: REST, sat: LONG_RUN(20, 16), sun: WALK }, cutback: true },
-  { n: 17, start: "Aug 10", phase: 2, mileage: 50, days: { mon: LIFT_PUSH, tue: INTERVAL_800, wed: LIFT_PULL, thu: EASY_Z2(10), fri: LIFT_FULL, sat: LONG_RUN(28, 17), sun: WALK } },
-  { n: 18, start: "Aug 17", phase: 2, mileage: 54, days: { mon: LIFT_PUSH, tue: TEMPO(10), wed: LIFT_PULL, thu: EASY_Z2(12), fri: LIFT_FULL, sat: LONG_RUN(30, 18), sun: WALK } },
-  { n: 19, start: "Aug 24", phase: 2, mileage: 57, days: { mon: LIFT_PUSH, tue: INTERVAL_1K, wed: LIFT_PULL, thu: EASY_Z2(12), fri: LIFT_FULL, sat: LONG_RUN(32, 19), sun: WALK } },
-  { n: 20, start: "Aug 31", phase: 2, mileage: 36, days: { mon: LIFT_PUSH, tue: EASY_Z2(7), wed: LIFT_PULL, thu: EASY_Z2(7), fri: REST, sat: LONG_RUN(22, 20), sun: WALK }, cutback: true },
+  // PHASE 2 — Build Block (Wed becomes the hard running day — intervals/tempo)
+  { n: 9,  start: "Jun 15", phase: 2, mileage: 38, days: { mon: combo(EASY_Z2(6), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(INTERVAL_400, CORE_BLOCK, "Intervals + Core"), thu: LIFT_FULL, fri: EASY_Z2(6), sat: LONG_RUN(18, 9), sun: FULL_REST } },
+  { n: 10, start: "Jun 22", phase: 2, mileage: 40, days: { mon: combo(EASY_Z2(6), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(TEMPO(5), CORE_BLOCK, "Tempo + Core"), thu: LIFT_FULL, fri: EASY_Z2(6), sat: LONG_RUN(20, 10), sun: FULL_REST } },
+  { n: 11, start: "Jun 29", phase: 2, mileage: 44, days: { mon: combo(EASY_Z2(7), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(INTERVAL_800, CORE_BLOCK, "Intervals + Core"), thu: LIFT_FULL, fri: EASY_Z2(6), sat: LONG_RUN(22, 11), sun: FULL_REST } },
+  { n: 12, start: "Jul 06", phase: 2, mileage: 28, days: { mon: combo(EASY_Z2(5), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: REST, thu: LIFT_FULL, fri: EASY_Z2(5), sat: LONG_RUN(14, 12), sun: FULL_REST }, cutback: true },
+  { n: 13, start: "Jul 13", phase: 2, mileage: 47, days: { mon: combo(EASY_Z2(8), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(TEMPO(6), CORE_BLOCK, "Tempo + Core"), thu: LIFT_FULL, fri: EASY_Z2(7), sat: LONG_RUN(24, 13), sun: FULL_REST } },
+  { n: 14, start: "Jul 20", phase: 2, mileage: 50, days: { mon: combo(EASY_Z2(8), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(INTERVAL_1K, CORE_BLOCK, "Intervals + Core"), thu: LIFT_FULL, fri: EASY_Z2(7), sat: LONG_RUN(26, 14), sun: FULL_REST } },
+  { n: 15, start: "Jul 27", phase: 2, mileage: 52, days: { mon: combo(EASY_Z2(8), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(TEMPO(8), CORE_BLOCK, "Tempo + Core"), thu: LIFT_FULL, fri: EASY_Z2(8), sat: LONG_RUN(28, 15), sun: FULL_REST } },
+  { n: 16, start: "Aug 03", phase: 2, mileage: 34, days: { mon: combo(EASY_Z2(6), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: REST, thu: LIFT_FULL, fri: EASY_Z2(6), sat: LONG_RUN(18, 16), sun: FULL_REST }, cutback: true },
+  { n: 17, start: "Aug 10", phase: 2, mileage: 50, days: { mon: combo(EASY_Z2(8), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(INTERVAL_800, CORE_BLOCK, "Intervals + Core"), thu: LIFT_FULL, fri: EASY_Z2(7), sat: LONG_RUN(26, 17), sun: FULL_REST } },
+  { n: 18, start: "Aug 17", phase: 2, mileage: 54, days: { mon: combo(EASY_Z2(9), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(TEMPO(10), CORE_BLOCK, "Tempo + Core"), thu: LIFT_FULL, fri: EASY_Z2(8), sat: LONG_RUN(28, 18), sun: FULL_REST } },
+  { n: 19, start: "Aug 24", phase: 2, mileage: 57, days: { mon: combo(EASY_Z2(9), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(INTERVAL_1K, CORE_BLOCK, "Intervals + Core"), thu: LIFT_FULL, fri: EASY_Z2(8), sat: LONG_RUN(30, 19), sun: FULL_REST } },
+  { n: 20, start: "Aug 31", phase: 2, mileage: 36, days: { mon: combo(EASY_Z2(6), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: REST, thu: LIFT_FULL, fri: EASY_Z2(6), sat: LONG_RUN(20, 20), sun: FULL_REST }, cutback: true },
 
-  // PHASE 3 — Peak → Race
-  { n: 21, start: "Sep 07", phase: 3, mileage: 58, days: { mon: LIFT_PUSH, tue: TEMPO(12), wed: LIFT_PULL, thu: EASY_Z2(12), fri: LIFT_FULL, sat: LONG_RUN(32, 21), sun: WALK } },
-  { n: 22, start: "Sep 14", phase: 3, mileage: 60, days: { mon: LIFT_PUSH, tue: INTERVAL_1K, wed: LIFT_PULL, thu: EASY_Z2(12), fri: LIFT_FULL, sat: LONG_RUN(34, 22), sun: WALK }, peak: true },
-  { n: 23, start: "Sep 21", phase: 3, mileage: 47, days: { mon: LIFT_PULL, tue: TEMPO(8), wed: REST, thu: EASY_Z2(10), fri: REST, sat: LONG_RUN(26, 23), sun: WALK }, taper: 1 },
-  { n: 24, start: "Sep 28", phase: 3, mileage: 37, days: { mon: REST, tue: TEMPO(6), wed: REST, thu: EASY_Z2(8), fri: REST, sat: LONG_RUN(20, 24), sun: WALK }, taper: 2 },
-  { n: 25, start: "Oct 05", phase: 3, mileage: 25, days: { mon: REST, tue: EASY_Z2(6), wed: REST, thu: EASY_Z2(5), fri: REST, sat: LONG_RUN(14, 25), sun: WALK }, taper: 3 },
+  // PHASE 3 — Peak → Race (strength tapers too)
+  { n: 21, start: "Sep 07", phase: 3, mileage: 58, days: { mon: combo(EASY_Z2(9), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(TEMPO(12), CORE_BLOCK, "Tempo + Core"), thu: LIFT_FULL, fri: EASY_Z2(8), sat: LONG_RUN(30, 21), sun: FULL_REST } },
+  { n: 22, start: "Sep 14", phase: 3, mileage: 60, days: { mon: combo(EASY_Z2(9), LIFT_PUSH, "Run + Upper Push"), tue: LIFT_PULL, wed: combo(INTERVAL_1K, CORE_BLOCK, "Intervals + Core"), thu: LIFT_FULL, fri: EASY_Z2(8), sat: LONG_RUN(34, 22), sun: FULL_REST }, peak: true },
+  { n: 23, start: "Sep 21", phase: 3, mileage: 47, days: { mon: combo(EASY_Z2(8), LIFT_PULL, "Run + Pull (light)"), tue: REST, wed: combo(TEMPO(8), CORE_BLOCK, "Tempo + Core"), thu: REST, fri: EASY_Z2(6), sat: LONG_RUN(24, 23), sun: FULL_REST }, taper: 1 },
+  { n: 24, start: "Sep 28", phase: 3, mileage: 37, days: { mon: EASY_Z2(6), tue: REST, wed: TEMPO(6), thu: REST, fri: EASY_Z2(5), sat: LONG_RUN(18, 24), sun: FULL_REST }, taper: 2 },
+  { n: 25, start: "Oct 05", phase: 3, mileage: 25, days: { mon: EASY_Z2(5), tue: REST, wed: EASY_Z2(5), thu: REST, fri: EASY_Z2(4), sat: LONG_RUN(12, 25), sun: FULL_REST }, taper: 3 },
   { n: 26, start: "Oct 12", phase: 3, mileage: 42.195, days: { mon: WALK, tue: EASY_Z2(4), wed: REST, thu: SHAKEOUT, fri: REST, sat: REST, sun: RACE_DAY }, race: true }
 ];
 
@@ -1217,7 +1261,7 @@ const PHASES = {
 const weekSchedule = {
   mon: [
     { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
-    { time: "06:30", tag: "Train", body: "See Training section for today's workout", cls: "tb-train" },
+    { time: "06:30", tag: "Train", body: "Easy run + Upper Push — see Training", cls: "tb-train" },
     { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
     { time: "09:00", tag: "RODA", body: "20 personalised outreaches · track in HubSpot", cls: "tb-roda" },
     { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
@@ -1232,7 +1276,7 @@ const weekSchedule = {
   ],
   tue: [
     { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
-    { time: "06:30", tag: "Run", body: "Easy Z2 or intervals — see Training", cls: "tb-train" },
+    { time: "06:30", tag: "Lift", body: "Upper Body Pull — see Training", cls: "tb-train" },
     { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
     { time: "09:00", tag: "RODA", body: "20 outreaches · track in HubSpot", cls: "tb-roda" },
     { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
@@ -1246,7 +1290,7 @@ const weekSchedule = {
   ],
   wed: [
     { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
-    { time: "06:30", tag: "Lift", body: "Pull day — see Training", cls: "tb-train" },
+    { time: "06:30", tag: "Train", body: "Run (hard day) + Core — see Training", cls: "tb-train" },
     { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
     { time: "09:00", tag: "RODA", body: "20 outreaches · track in HubSpot", cls: "tb-roda" },
     { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
@@ -1260,7 +1304,7 @@ const weekSchedule = {
   ],
   thu: [
     { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
-    { time: "06:30", tag: "Run", body: "Easy Z2 or tempo — see Training", cls: "tb-train" },
+    { time: "06:30", tag: "Lift", body: "Lower Body — see Training", cls: "tb-train" },
     { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
     { time: "09:00", tag: "RODA", body: "20 outreaches · track in HubSpot", cls: "tb-roda" },
     { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
@@ -1274,7 +1318,7 @@ const weekSchedule = {
   ],
   fri: [
     { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
-    { time: "06:30", tag: "Lift", body: "Full body — see Training", cls: "tb-train" },
+    { time: "06:30", tag: "Run", body: "Easy Z2 + 15 min mobility — see Training", cls: "tb-train" },
     { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
     { time: "09:00", tag: "RODA", body: "20 outreaches · track in HubSpot", cls: "tb-roda" },
     { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
@@ -1297,13 +1341,13 @@ const weekSchedule = {
     { time: "22:30", tag: "Lights Out", body: "Non-negotiable", cls: "tb-sleep" }
   ],
   sun: [
-    { time: "07:30", tag: "Wake", body: "Recovery · no alarm needed", cls: "tb-sleep" },
-    { time: "08:30", tag: "Breakfast", body: "Slow breakfast with Catarina", cls: "tb-couple" },
-    { time: "10:00", tag: "Walk", body: "Together · Madrid · no phones", cls: "tb-couple" },
+    { time: "08:00", tag: "Wake", body: "Full rest day · no alarm · sleep in", cls: "tb-sleep" },
+    { time: "09:00", tag: "Breakfast", body: "Slow breakfast with Catarina", cls: "tb-couple" },
+    { time: "10:30", tag: "Walk", body: "Optional · together · Madrid · no phones", cls: "tb-couple" },
     { time: "12:00", tag: "Lunch", body: "Light · pre-review", cls: "" },
     { time: "13:00", tag: "Review", body: "Weekly audit · outreaches · health · money · relationships", cls: "tb-roda" },
     { time: "15:00", tag: "Plan", body: "Next week's Mon–Sun blueprint", cls: "tb-roda" },
-    { time: "17:00", tag: "Free", body: "Open · call Marta · family", cls: "" },
+    { time: "17:00", tag: "Free", body: "Open · call Marta · family · rest", cls: "" },
     { time: "19:00", tag: "Dinner", body: "Home · with C", cls: "tb-couple" },
     { time: "20:30", tag: "Read", body: "Journal · prep mind for Monday", cls: "" },
     { time: "22:30", tag: "Lights Out", body: "Non-negotiable", cls: "tb-sleep" }
@@ -1319,6 +1363,55 @@ function renderWorkout(workout, dayName) {
         <div class="rest-title">${workout.title}</div>
         <div class="rest-sub">${dayName}</div>
         <div class="rest-body">${workout.body}</div>
+      </div>
+    `;
+  }
+
+  if (workout.type === 'combo') {
+    const r = workout.runWorkout;
+    const l = workout.liftWorkout;
+    const runBlocksHtml = r.runBlocks.map(b => `
+      <div class="run-block">
+        <div class="rb-label">${b.label}</div>
+        <div class="rb-title">${b.title}</div>
+        ${b.detail ? `<div class="rb-detail">${b.detail}</div>` : ''}
+      </div>
+    `).join('');
+
+    const liftGroupsHtml = l.groups.map(g => `
+      <div class="ex-group">
+        <div class="ex-group-title">${g.title}</div>
+        ${g.items.map((it, i) => `
+          <div class="ex">
+            <div class="ex-num">${String(i+1).padStart(2, '0')}</div>
+            <div class="ex-main">
+              <div class="ex-name">${it.name}</div>
+              ${it.note ? `<div class="ex-note">${it.note}</div>` : ''}
+            </div>
+            <div class="ex-sets">${it.sets}</div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+
+    return `
+      <div class="workout-card">
+        <div class="wo-day">${dayName}</div>
+        <div class="wo-title">${workout.name}</div>
+        <div class="wo-type">Run + Strength</div>
+        <div class="wo-quick">
+          <div class="quick-stat"><div class="v">${r.focus.split('·')[0].trim()}</div><div class="l">Run</div></div>
+          <div class="quick-stat"><div class="v">${l.duration.replace(' min', 'm')}</div><div class="l">Lift</div></div>
+          <div class="quick-stat"><div class="v">${l.groups.reduce((s, g) => s + g.items.length, 0)}</div><div class="l">Exercises</div></div>
+        </div>
+
+        <div class="combo-section-header">PART 1 · RUN (${r.name})</div>
+        ${runBlocksHtml}
+
+        <div class="combo-section-header" style="margin-top: 28px;">PART 2 · STRENGTH (${l.name})</div>
+        ${liftGroupsHtml}
+
+        ${workout.note ? `<div class="coach-note">${workout.note}</div>` : ''}
       </div>
     `;
   }
