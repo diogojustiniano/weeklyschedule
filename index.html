@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0f0d0b" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>THE PROTOCOL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0d0b;
+    --bg-elevated: #181512;
+    --bg-card: #1d1a16;
+    --bg-deep: #0a0908;
+    --ink: #f4ede3;
+    --ink-dim: #a89d8c;
+    --ink-faint: #6b6255;
+    --rule: #2a2621;
+    --accent: #e8532c;
+    --accent-soft: #f08a5d;
+    --gold: #d4a574;
+    --green: #7a8f5c;
+    --blue: #8fb4c4;
+    --pink: #d68fa0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "liga", "kern";
+    overscroll-behavior-y: none;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse at top, rgba(232, 83, 44, 0.06), transparent 60%);
+    min-height: 100vh;
+    padding: 24px 20px 120px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ========= HEADER ========= */
+  header {
+    padding: 8px 0 24px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 24px;
+  }
+
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 40px;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  h1 em {
+    font-weight: 600;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .date-line {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .date-line strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .date-line .race {
+    color: var(--accent);
+  }
+
+  /* ========= MARATHON BAR ========= */
+  .marathon-bar {
+    background: linear-gradient(135deg, #1d1a16, #241e17);
+    border: 1px solid var(--rule);
+    padding: 24px 20px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .marathon-bar::before {
+    content: '42.2';
+    position: absolute;
+    right: -10px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-weight: 200;
+    font-size: 140px;
+    color: var(--accent);
+    opacity: 0.06;
+    line-height: 1;
+  }
+
+  .marathon-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .marathon-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 14px;
+    line-height: 1.15;
+    position: relative;
+  }
+
+  .marathon-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .countdown-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    position: relative;
+  }
+
+  .countdown-stat {
+    text-align: left;
+  }
+
+  .countdown-stat .num {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 38px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .countdown-stat .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ========= PILLS NAV ========= */
+  .pills {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 28px;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 10px 0;
+    z-index: 10;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .pills::-webkit-scrollbar { display: none; }
+
+  .pill {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    color: var(--ink-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 10px 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 999px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .pill.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    font-weight: 500;
+  }
+
+  /* ========= SECTIONS ========= */
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.3s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .section-title em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .section-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+
+  /* ========= SELECTORS (WEEK + DAY) ========= */
+  .selector-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-faint);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-top: 20px;
+  }
+
+  .selector-label:first-of-type { margin-top: 0; }
+
+  .custom-select {
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  select {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    padding: 16px 44px 16px 18px;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    border-radius: 0;
+    font-weight: 500;
+  }
+
+  select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .custom-select::after {
+    content: '▾';
+    position: absolute;
+    right: 18px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 14px;
+    pointer-events: none;
+  }
+
+  /* ========= DAY NAV CHIPS ========= */
+  .day-chips {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+
+  .day-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    color: var(--ink-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 10px 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+
+  .day-chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+  }
+
+  .day-chip.rest {
+    color: var(--ink-faint);
+  }
+
+  /* ========= WORKOUT CARD ========= */
+  .workout-card {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: 24px 22px 28px;
+    margin-bottom: 20px;
+  }
+
+  .wo-day {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .wo-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .wo-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .wo-quick {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+
+  .quick-stat {
+    flex: 1 0 auto;
+    min-width: 72px;
+  }
+
+  .quick-stat .v {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .quick-stat .l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* Exercise list */
+  .ex-group {
+    margin-bottom: 22px;
+  }
+
+  .ex-group:last-child { margin-bottom: 0; }
+
+  .ex-group-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .ex {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 10px;
+    padding: 12px 0;
+    align-items: start;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ex:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .ex-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    padding-top: 3px;
+  }
+
+  .ex-main .ex-name {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .ex-main .ex-note {
+    font-family: 'Fraunces', serif;
+    font-size: 12px;
+    color: var(--ink-dim);
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+  .ex-sets {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-soft);
+    font-weight: 500;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+    padding-top: 2px;
+  }
+
+  /* Run specific */
+  .run-block {
+    background: var(--bg-elevated);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    border-left: 2px solid var(--accent-soft);
+  }
+
+  .run-block .rb-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--accent-soft);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .run-block .rb-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .run-block .rb-detail {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+
+  .coach-note {
+    background: var(--bg-deep);
+    border: 1px solid var(--rule);
+    padding: 16px 18px;
+    margin-top: 18px;
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-dim);
+    line-height: 1.55;
+  }
+
+  .coach-note::before {
+    content: 'Coach ';
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* Rest day */
+  .rest-day-card {
+    text-align: center;
+    padding: 60px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+  }
+
+  .rest-day-card .rest-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: var(--gold);
+  }
+
+  .rest-day-card .rest-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .rest-day-card .rest-body {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-dim);
+    line-height: 1.6;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  /* Timetable */
+  .time-block {
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .time-block:last-child { border-bottom: none; }
+
+  .tb-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    padding-top: 2px;
+  }
+
+  .tb-content .tb-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+
+  .tb-content .tb-body {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .tb-train { color: var(--accent-soft); }
+  .tb-roda { color: var(--blue); }
+  .tb-learn { color: var(--gold); }
+  .tb-couple { color: var(--pink); }
+  .tb-sleep { color: var(--ink-faint); font-style: italic; }
+
+  /* Non-neg list */
+  .nn-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .nn-item {
+    background: var(--bg-card);
+    padding: 18px 18px 18px 54px;
+    position: relative;
+    border-left: 2px solid var(--accent);
+  }
+
+  .nn-num {
+    position: absolute;
+    left: 16px; top: 14px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .nn-title {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    line-height: 1.25;
+  }
+
+  .nn-desc {
+    font-family: 'Fraunces', serif;
+    font-size: 12px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  /* Pull quote */
+  .pq {
+    margin: 40px 0 8px;
+    padding: 28px 8px;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+  }
+
+  .pq p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .pq em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  /* Phase banner */
+  .phase-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: linear-gradient(90deg, var(--bg-card), var(--bg-elevated));
+    border: 1px solid var(--rule);
+    margin-bottom: 18px;
+  }
+
+  .phase-banner .pb-left .pb-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .phase-banner .pb-left .pb-name {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .phase-banner .pb-right {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-dim);
+  }
+
+  /* Key sessions reference */
+  .ks-item {
+    background: var(--bg-card);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    border-left: 2px solid var(--gold);
+  }
+
+  .ks-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 3px;
+  }
+
+  .ks-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .ks-body {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  details {
+    margin-top: 8px;
+  }
+
+  summary {
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px 0;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+
+  summary::after {
+    content: ' ▾';
+  }
+
+  details[open] summary::after {
+    content: ' ▴';
+  }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* Prevent select text on double-tap */
+  .pill, .day-chip, summary {
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">Protocol · v1.1 · Mobile</div>
+    <h1>Raise the <em>man</em>,<br/>not the <em>vision</em>.</h1>
+    <div class="date-line">
+      <span>Today <strong>17 Apr 2026</strong></span>
+      <span class="race">Race 17 Oct 2026</span>
+    </div>
+  </header>
+
+  <!-- MARATHON COUNTDOWN -->
+  <div class="marathon-bar">
+    <div class="marathon-label">◉ Forcing Function</div>
+    <div class="marathon-title">First <em>marathon</em> · 6 months · target 4:30</div>
+    <div class="countdown-row">
+      <div class="countdown-stat">
+        <div class="num" id="days">183</div>
+        <div class="lbl">Days</div>
+      </div>
+      <div class="countdown-stat">
+        <div class="num" id="weeks">26</div>
+        <div class="lbl">Weeks</div>
+      </div>
+      <div class="countdown-stat">
+        <div class="num" id="currentWeek">W1</div>
+        <div class="lbl">Current</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILLS NAV -->
+  <nav class="pills">
+    <button class="pill active" data-section="training">🏃 Training</button>
+    <button class="pill" data-section="week">📅 Week</button>
+    <button class="pill" data-section="daily">✓ Daily</button>
+    <button class="pill" data-section="reference">📖 Reference</button>
+  </nav>
+
+  <!-- SECTION: TRAINING -->
+  <div class="section active" id="section-training">
+    <h2 class="section-title">Today's <em>workout</em></h2>
+    <div class="section-sub">Pick your week. Pick your day. Read it while you train.</div>
+
+    <div class="phase-banner" id="phase-banner">
+      <div class="pb-left">
+        <div class="pb-tag">Phase <span id="phase-num">01</span></div>
+        <div class="pb-name" id="phase-name">Base Build</div>
+      </div>
+      <div class="pb-right" id="phase-range">Weeks 1–8</div>
+    </div>
+
+    <div class="selector-label">Select week</div>
+    <div class="custom-select">
+      <select id="weekSelect"></select>
+    </div>
+
+    <div class="selector-label">Select day</div>
+    <div class="day-chips" id="dayChips">
+      <div class="day-chip" data-day="mon">Mon</div>
+      <div class="day-chip" data-day="tue">Tue</div>
+      <div class="day-chip" data-day="wed">Wed</div>
+      <div class="day-chip" data-day="thu">Thu</div>
+      <div class="day-chip" data-day="fri">Fri</div>
+      <div class="day-chip active" data-day="sat">Sat</div>
+      <div class="day-chip" data-day="sun">Sun</div>
+    </div>
+
+    <div id="workoutContainer"></div>
+  </div>
+
+  <!-- SECTION: WEEK -->
+  <div class="section" id="section-week">
+    <h2 class="section-title">The <em>week</em></h2>
+    <div class="section-sub">Monday → Sunday · repeatable until automatic</div>
+
+    <div class="selector-label">View day</div>
+    <div class="custom-select">
+      <select id="weekdaySelect">
+        <option value="mon">Monday</option>
+        <option value="tue">Tuesday</option>
+        <option value="wed">Wednesday</option>
+        <option value="thu">Thursday</option>
+        <option value="fri">Friday</option>
+        <option value="sat">Saturday</option>
+        <option value="sun">Sunday</option>
+      </select>
+    </div>
+
+    <div id="weekdayContainer"></div>
+  </div>
+
+  <!-- SECTION: DAILY -->
+  <div class="section" id="section-daily">
+    <h2 class="section-title">Daily <em>non-negotiables</em></h2>
+    <div class="section-sub">Seven actions · zero exceptions · the floor</div>
+
+    <div class="nn-list">
+      <div class="nn-item">
+        <div class="nn-num">1</div>
+        <div class="nn-title">06:00 wake · 22:30 lights out</div>
+        <div class="nn-desc">The schedule dies if this dies. Everything downstream depends on this one choice.</div>
+      </div>
+      <div class="nn-item">
+        <div class="nn-num">2</div>
+        <div class="nn-title">5 minutes of breathwork</div>
+        <div class="nn-desc">Within 30 min of waking. Box breath or 4-7-8. Nervous system regulated on purpose.</div>
+      </div>
+      <div class="nn-item">
+        <div class="nn-num">3</div>
+        <div class="nn-title">Movement — no zero days</div>
+        <div class="nn-desc">Gym, run, or 45-min walk. Something. The body gets moved every single day.</div>
+      </div>
+      <div class="nn-item">
+        <div class="nn-num">4</div>
+        <div class="nn-title">20 outreaches or 2 hrs mission work</div>
+        <div class="nn-desc">Mon–Fri: 20 RODA outreaches. Sat: 2 hrs kids' lit mission. No day without building.</div>
+      </div>
+      <div class="nn-item">
+        <div class="nn-num">5</div>
+        <div class="nn-title">Kitchen closed at 21:00</div>
+        <div class="nn-desc">Dessert before 21:00 allowed. After 21:00 kitchen is closed. This is the one that saves your life.</div>
+      </div>
+      <div class="nn-item">
+        <div class="nn-num">6</div>
+        <div class="nn-title">One uninterrupted hour with Catarina</div>
+        <div class="nn-desc">No phones. No laptops. No YouTube in background. Pay back her patience daily.</div>
+      </div>
+      <div class="nn-item">
+        <div class="nn-num">7</div>
+        <div class="nn-title">2 min bedtime reflection</div>
+        <div class="nn-desc">"Did I act like the man I said I'd become today? Where didn't I?" Written. Not thought.</div>
+      </div>
+    </div>
+
+    <div class="pq">
+      <p>You are not chasing wealth.<br/>You are engineering the conditions to be<br/><em>a nice man, a present father, an honest partner</em>.</p>
+    </div>
+  </div>
+
+  <!-- SECTION: REFERENCE -->
+  <div class="section" id="section-reference">
+    <h2 class="section-title">Training <em>reference</em></h2>
+    <div class="section-sub">What each session type actually means</div>
+
+    <div class="ks-item">
+      <div class="ks-name">Z2 / Easy Run</div>
+      <div class="ks-meta">Conversational · heart rate 130–145</div>
+      <div class="ks-body">You should be able to hold a full conversation. If you can't, slow down. 80% of weekly volume. Ego-free running. Pace roughly 7:00–7:30/km.</div>
+    </div>
+
+    <div class="ks-item">
+      <div class="ks-name">Tempo @ Marathon Pace</div>
+      <div class="ks-meta">From week 13 · comfortably hard</div>
+      <div class="ks-body">Your goal marathon pace is ~6:25/km (for 4:30 finish). Warm up 2km, hold MP, cool 2km. Teaches body to hold pace when tired.</div>
+    </div>
+
+    <div class="ks-item">
+      <div class="ks-name">Intervals</div>
+      <div class="ks-meta">400m / 800m / 1km reps</div>
+      <div class="ks-body">Run faster than 10K pace (target ~5:30/km). Equal-time jog recovery. Builds VO₂max and running economy. Hurt on purpose, not by accident.</div>
+    </div>
+
+    <div class="ks-item">
+      <div class="ks-name">The Long Run</div>
+      <div class="ks-meta">Saturday · the whole point</div>
+      <div class="ks-body">Slower than Z2 is fine. Finishing strong is the only metric. Practice fueling from 90 min onward (gels, water). Marathon won or lost here.</div>
+    </div>
+
+    <div class="ks-item">
+      <div class="ks-name">Strength / Lift</div>
+      <div class="ks-meta">3×/week · 45 min</div>
+      <div class="ks-body">Compound focus: squat, deadlift, bench, row, overhead press. Drop intensity from week 20. Lifting is servant of the run, not the master.</div>
+    </div>
+
+    <div class="ks-item">
+      <div class="ks-name">Cutback Week</div>
+      <div class="ks-meta">Weeks 4, 8, 12, 16, 20 · 30–40% volume drop</div>
+      <div class="ks-body">Non-negotiable. Adaptation happens in recovery, not in work. Skip cutbacks and you pick up an injury week 15 and lose the race.</div>
+    </div>
+
+    <div class="pq">
+      <p>The marathon is the <em>forcing function</em>.<br/>The baby is the <em>deeper deadline</em>.<br/>Build the body that meets both.</p>
+    </div>
+  </div>
+
+  <footer>Protocol · Madrid · 2026</footer>
+
+<script>
+/* ================= DATA ================= */
+
+const START_DATE = new Date('2026-04-20');
+const RACE_DATE  = new Date('2026-10-17');
+
+// Lift day templates (compound-focused)
+const LIFT_PUSH = {
+  name: "Push + Core",
+  type: "strength",
+  duration: "45 min",
+  focus: "Chest · Shoulders · Triceps · Core",
+  groups: [
+    { title: "Warm-up", items: [
+      { name: "Row ergo or bike", sets: "5 min", note: "Easy pace, raise HR" },
+      { name: "Dynamic mobility", sets: "5 min", note: "Shoulder circles, thoracic rotations, hip openers" }
+    ]},
+    { title: "Main Lift", items: [
+      { name: "Barbell Bench Press", sets: "4×6", note: "Add 2.5kg when all reps complete with good form" },
+      { name: "Overhead Press", sets: "3×8", note: "Strict · no knee drive" }
+    ]},
+    { title: "Accessory", items: [
+      { name: "Dumbbell Incline Press", sets: "3×10", note: "Pause 1s at bottom" },
+      { name: "Dips", sets: "3×8–12", note: "Weighted if able" },
+      { name: "Lateral Raises", sets: "3×15", note: "Light · slow tempo" },
+      { name: "Tricep Rope Pushdown", sets: "3×12", note: "" }
+    ]},
+    { title: "Core Finisher", items: [
+      { name: "Plank", sets: "3×45s", note: "Straight line head to heels" },
+      { name: "Hanging Knee Raise", sets: "3×10", note: "No swinging" }
+    ]}
+  ],
+  note: "Form over weight. If your form breaks, the set is over. The point is being on the start line healthy."
+};
+
+const LIFT_PULL = {
+  name: "Pull + Legs Light",
+  type: "strength",
+  duration: "45 min",
+  focus: "Back · Biceps · Posterior Chain",
+  groups: [
+    { title: "Warm-up", items: [
+      { name: "Row ergo", sets: "5 min", note: "Easy" },
+      { name: "Band pull-aparts", sets: "2×20", note: "Scap activation" }
+    ]},
+    { title: "Main Lift", items: [
+      { name: "Deadlift (conventional)", sets: "4×5", note: "Form first · brace core · no rounding" },
+      { name: "Pull-ups or Lat Pulldown", sets: "4×8", note: "Weighted or assisted as needed" }
+    ]},
+    { title: "Accessory", items: [
+      { name: "Barbell Row", sets: "3×10", note: "Strict · pause at top" },
+      { name: "Face Pulls", sets: "3×15", note: "Rear delt focus" },
+      { name: "Dumbbell Curl", sets: "3×12", note: "Yes, the 20kg goal — progress to it" },
+      { name: "Hammer Curl", sets: "3×12", note: "" }
+    ]},
+    { title: "Core Finisher", items: [
+      { name: "Farmer's Carry", sets: "3×40m", note: "Heavy as you can hold" },
+      { name: "Dead Bug", sets: "3×10 each side", note: "Slow · controlled" }
+    ]}
+  ],
+  note: "Pull day is non-negotiable for runners. Strong posterior chain prevents IT band + hip issues on long runs."
+};
+
+const LIFT_FULL = {
+  name: "Full Body",
+  type: "strength",
+  duration: "45 min",
+  focus: "Squat day · legs + full body",
+  groups: [
+    { title: "Warm-up", items: [
+      { name: "Bike or walk", sets: "5 min", note: "Easy" },
+      { name: "Bodyweight squats + lunges", sets: "2×10", note: "Full range" }
+    ]},
+    { title: "Main Lift", items: [
+      { name: "Back Squat", sets: "4×5", note: "Bodyweight target = 100kg × 5. Add 2.5kg when all reps clean." }
+    ]},
+    { title: "Accessory", items: [
+      { name: "Romanian Deadlift", sets: "3×8", note: "Hamstring focus · light-moderate" },
+      { name: "Walking Lunges", sets: "3×10 each leg", note: "Dumbbells" },
+      { name: "Goblet Squat", sets: "3×12", note: "Depth · control" },
+      { name: "Calf Raises", sets: "3×15", note: "Pause at top" }
+    ]},
+    { title: "Core + Mobility", items: [
+      { name: "Hip flexor stretch", sets: "2×60s each", note: "Critical for runners" },
+      { name: "Pigeon pose", sets: "2×60s each", note: "Deep breathing" }
+    ]}
+  ],
+  note: "Squat is your compound lift benchmark. Don't chase deadlift numbers at the cost of run recovery."
+};
+
+// Run templates
+const run = (title, subtitle, distance, blocks, note) => ({
+  name: title, type: "run", duration: subtitle, focus: distance, runBlocks: blocks, note: note
+});
+
+const EASY_Z2 = (km) => run(
+  `Easy Z2 · ${km}km`,
+  "Zone 2 · conversational",
+  `${km} km · ~${Math.round(km * 7.2)} min`,
+  [
+    { label: "Warm-up", title: "Easy jog · 1km", detail: "Gradually lift HR into Z2" },
+    { label: "Main", title: `Z2 pace · ${km - 2}km`, detail: "Conversational. Check HR 130–145. If gasping, slow down." },
+    { label: "Cool-down", title: "Walk · 5 min", detail: "Then calf + hip stretches" }
+  ],
+  "If you can't hold a conversation, you're running too fast. Ego-free running is the whole point."
+);
+
+const INTERVAL_400 = run(
+  "Intervals · 6×400m",
+  "VO₂max · ~35 min total",
+  "~6.5 km including W/U + C/D",
+  [
+    { label: "Warm-up", title: "Easy jog · 2km", detail: "Then 4× strides at 80% effort" },
+    { label: "Main", title: "6 × 400m @ 5K pace", detail: "Target ~5:15/km pace. 400m recovery jog between each." },
+    { label: "Cool-down", title: "Easy jog · 1.5km", detail: "Flush legs · stretch" }
+  ],
+  "These should hurt but be repeatable. If #6 is much slower than #1, you went too hard."
+);
+
+const INTERVAL_800 = run(
+  "Intervals · 5×800m",
+  "VO₂max · ~45 min total",
+  "~9 km",
+  [
+    { label: "Warm-up", title: "Easy jog · 2km + 4 strides", detail: "" },
+    { label: "Main", title: "5 × 800m @ 5K-10K pace", detail: "Target 5:20/km. 400m jog recovery." },
+    { label: "Cool-down", title: "Easy jog · 1.5km", detail: "" }
+  ],
+  "The 800 is the runner's gut check. Last one should be the fastest if you paced right."
+);
+
+const INTERVAL_1K = run(
+  "Intervals · 4–6×1km",
+  "VO₂max · ~55 min",
+  "~11 km",
+  [
+    { label: "Warm-up", title: "Easy jog · 2km + strides", detail: "" },
+    { label: "Main", title: "1km reps @ 10K pace", detail: "Target 5:30/km. 90s jog recovery between." },
+    { label: "Cool-down", title: "Easy jog · 2km", detail: "" }
+  ],
+  "Longer reps = marathon-specific pain. Hold form when tired."
+);
+
+const TEMPO = (km) => run(
+  `Tempo · ${km}km @ MP`,
+  "Marathon pace work",
+  `${km + 4} km total`,
+  [
+    { label: "Warm-up", title: "Easy jog · 2km", detail: "Progressive, end in Z2" },
+    { label: "Main", title: `${km}km @ marathon pace`, detail: "Target 6:25/km. Steady. Controlled. Not racing." },
+    { label: "Cool-down", title: "Easy jog · 2km", detail: "Shake legs out" }
+  ],
+  "Marathon pace should feel 'comfortably hard' — not a race. If it feels easy, you're undertrained. If it hurts, you're overpacing."
+);
+
+const LONG_RUN = (km, week) => {
+  const blocks = [
+    { label: "Start", title: "Very easy first 2km", detail: "Never start a long run fast. Warm into it." },
+    { label: "Main", title: `${km}km total at Z2`, detail: "Conversational. Slower than easy run pace is fine." }
+  ];
+  if (km >= 18) blocks.push({ label: "Fuel", title: "Gel + water every 30–40 min", detail: "Practice race-day nutrition. Never try anything new on race day." });
+  if (km >= 26) blocks.push({ label: "Finish", title: "Last 3km steady", detail: "Not fast. Just controlled. Mental rep of finishing strong." });
+
+  return run(
+    `Long Run · ${km}km`,
+    `The week's key session · ~${Math.round(km * 7.5)} min`,
+    `${km} km`,
+    blocks,
+    km >= 28
+      ? "This is the session that makes the marathon. Time on feet matters more than pace. Finish feeling like you had more."
+      : "Long runs build the aerobic engine. Slow down. You're not racing this. Finish strong."
+  );
+};
+
+const SHAKEOUT = run(
+  "Shakeout · 4km easy",
+  "Pre-race · open the legs",
+  "4 km",
+  [
+    { label: "Main", title: "Easy jog · 4km", detail: "Very relaxed. HR low. Just moving." },
+    { label: "Finish", title: "4× 100m strides", detail: "Accelerate smoothly to 80%, don't sprint." }
+  ],
+  "Don't cook yourself before the race. This is loosening, not training."
+);
+
+const RACE_DAY = {
+  name: "MARATHON · Race Day",
+  type: "race",
+  duration: "Target 4:30:00",
+  focus: "42.195 km · Madrid · 17 October",
+  groups: [
+    { title: "Pre-race (T-90 min)", items: [
+      { name: "Wake early · coffee", sets: "T-3h", note: "Eat familiar breakfast: oats, banana, honey. Nothing new." },
+      { name: "Arrive at start", sets: "T-60min", note: "Warm-up jog · 5 min only" },
+      { name: "Gel 1", sets: "T-15min", note: "" }
+    ]},
+    { title: "The Race", items: [
+      { name: "0–10km", sets: "~6:45/km", note: "INTENTIONALLY SLOW. Hold back. Feel too easy." },
+      { name: "10–21km", sets: "~6:30/km", name: "10–21km", note: "Settle into marathon pace. Gel every 30 min." },
+      { name: "21–32km", sets: "~6:25/km", note: "Stay steady. The race starts at 32km. Hydrate." },
+      { name: "32–42km", sets: "hold on", note: "Pain cave. One km at a time. Form, not pace." }
+    ]},
+    { title: "Finish", items: [
+      { name: "Last 400m", sets: "all in", note: "Give everything left. You get one first marathon." }
+    ]}
+  ],
+  note: "You've done the work. Trust it. The plan gets you to the line. You carry yourself to the finish."
+};
+
+// Rest days
+const REST = { rest: true, title: "Rest · or walk", body: "Walking is fine. Running is not. Legs recover, mind resets. Protect this day — it's what makes the other days possible." };
+const WALK = { rest: true, title: "Active recovery walk", body: "30–45 min easy walk. Ideally with Catarina. No phone if you can manage it. The nervous system needs unstructured time." };
+const TEST_10K = run(
+  "10K Test Race",
+  "Benchmark · week 8",
+  "10 km all-out",
+  [
+    { label: "Warm-up", title: "Easy jog · 2km + strides", detail: "" },
+    { label: "Main", title: "10K · race effort", detail: "Target: break 60 min. Current PB is 67. The training should move the needle." },
+    { label: "Cool-down", title: "Walk · 10 min", detail: "" }
+  ],
+  "This test tells us if phase 1 worked. If you're sub-60, phase 2 targets stand. If not, we recalibrate."
+);
+
+// Weeks: 1 = week of Apr 20
+const weeks = [
+  // PHASE 1 — Base Build
+  { n: 1, start: "Apr 20", phase: 1, mileage: 18, days: { mon: LIFT_PUSH, tue: EASY_Z2(5), wed: LIFT_PULL, thu: EASY_Z2(5), fri: LIFT_FULL, sat: LONG_RUN(8, 1), sun: WALK } },
+  { n: 2, start: "Apr 27", phase: 1, mileage: 22, days: { mon: LIFT_PUSH, tue: EASY_Z2(6), wed: LIFT_PULL, thu: EASY_Z2(6), fri: LIFT_FULL, sat: LONG_RUN(10, 2), sun: WALK } },
+  { n: 3, start: "May 04", phase: 1, mileage: 26, days: { mon: LIFT_PUSH, tue: EASY_Z2(7), wed: LIFT_PULL, thu: EASY_Z2(7), fri: LIFT_FULL, sat: LONG_RUN(12, 3), sun: WALK } },
+  { n: 4, start: "May 11", phase: 1, mileage: 20, days: { mon: LIFT_PUSH, tue: EASY_Z2(5), wed: LIFT_PULL, thu: EASY_Z2(5), fri: REST, sat: LONG_RUN(10, 4), sun: WALK }, cutback: true },
+  { n: 5, start: "May 18", phase: 1, mileage: 30, days: { mon: LIFT_PUSH, tue: EASY_Z2(8), wed: LIFT_PULL, thu: EASY_Z2(8), fri: LIFT_FULL, sat: LONG_RUN(14, 5), sun: WALK } },
+  { n: 6, start: "May 25", phase: 1, mileage: 32, days: { mon: LIFT_PUSH, tue: EASY_Z2(8), wed: LIFT_PULL, thu: EASY_Z2(8), fri: LIFT_FULL, sat: LONG_RUN(16, 6), sun: WALK } },
+  { n: 7, start: "Jun 01", phase: 1, mileage: 36, days: { mon: LIFT_PUSH, tue: EASY_Z2(9), wed: LIFT_PULL, thu: EASY_Z2(9), fri: LIFT_FULL, sat: LONG_RUN(18, 7), sun: WALK } },
+  { n: 8, start: "Jun 08", phase: 1, mileage: 24, days: { mon: LIFT_PUSH, tue: EASY_Z2(6), wed: LIFT_PULL, thu: EASY_Z2(6), fri: REST, sat: TEST_10K, sun: WALK }, cutback: true },
+
+  // PHASE 2 — Build Block
+  { n: 9,  start: "Jun 15", phase: 2, mileage: 38, days: { mon: LIFT_PUSH, tue: INTERVAL_400, wed: LIFT_PULL, thu: EASY_Z2(8), fri: LIFT_FULL, sat: LONG_RUN(20, 9), sun: WALK } },
+  { n: 10, start: "Jun 22", phase: 2, mileage: 40, days: { mon: LIFT_PUSH, tue: TEMPO(5), wed: LIFT_PULL, thu: EASY_Z2(8), fri: LIFT_FULL, sat: LONG_RUN(22, 10), sun: WALK } },
+  { n: 11, start: "Jun 29", phase: 2, mileage: 44, days: { mon: LIFT_PUSH, tue: INTERVAL_800, wed: LIFT_PULL, thu: EASY_Z2(9), fri: LIFT_FULL, sat: LONG_RUN(24, 11), sun: WALK } },
+  { n: 12, start: "Jul 06", phase: 2, mileage: 28, days: { mon: LIFT_PUSH, tue: EASY_Z2(6), wed: LIFT_PULL, thu: EASY_Z2(6), fri: REST, sat: LONG_RUN(16, 12), sun: WALK }, cutback: true },
+  { n: 13, start: "Jul 13", phase: 2, mileage: 47, days: { mon: LIFT_PUSH, tue: TEMPO(6), wed: LIFT_PULL, thu: EASY_Z2(10), fri: LIFT_FULL, sat: LONG_RUN(26, 13), sun: WALK } },
+  { n: 14, start: "Jul 20", phase: 2, mileage: 50, days: { mon: LIFT_PUSH, tue: INTERVAL_1K, wed: LIFT_PULL, thu: EASY_Z2(10), fri: LIFT_FULL, sat: LONG_RUN(28, 14), sun: WALK } },
+  { n: 15, start: "Jul 27", phase: 2, mileage: 52, days: { mon: LIFT_PUSH, tue: TEMPO(8), wed: LIFT_PULL, thu: EASY_Z2(10), fri: LIFT_FULL, sat: LONG_RUN(30, 15), sun: WALK } },
+  { n: 16, start: "Aug 03", phase: 2, mileage: 34, days: { mon: LIFT_PUSH, tue: EASY_Z2(7), wed: LIFT_PULL, thu: EASY_Z2(7), fri: REST, sat: LONG_RUN(20, 16), sun: WALK }, cutback: true },
+  { n: 17, start: "Aug 10", phase: 2, mileage: 50, days: { mon: LIFT_PUSH, tue: INTERVAL_800, wed: LIFT_PULL, thu: EASY_Z2(10), fri: LIFT_FULL, sat: LONG_RUN(28, 17), sun: WALK } },
+  { n: 18, start: "Aug 17", phase: 2, mileage: 54, days: { mon: LIFT_PUSH, tue: TEMPO(10), wed: LIFT_PULL, thu: EASY_Z2(12), fri: LIFT_FULL, sat: LONG_RUN(30, 18), sun: WALK } },
+  { n: 19, start: "Aug 24", phase: 2, mileage: 57, days: { mon: LIFT_PUSH, tue: INTERVAL_1K, wed: LIFT_PULL, thu: EASY_Z2(12), fri: LIFT_FULL, sat: LONG_RUN(32, 19), sun: WALK } },
+  { n: 20, start: "Aug 31", phase: 2, mileage: 36, days: { mon: LIFT_PUSH, tue: EASY_Z2(7), wed: LIFT_PULL, thu: EASY_Z2(7), fri: REST, sat: LONG_RUN(22, 20), sun: WALK }, cutback: true },
+
+  // PHASE 3 — Peak → Race
+  { n: 21, start: "Sep 07", phase: 3, mileage: 58, days: { mon: LIFT_PUSH, tue: TEMPO(12), wed: LIFT_PULL, thu: EASY_Z2(12), fri: LIFT_FULL, sat: LONG_RUN(32, 21), sun: WALK } },
+  { n: 22, start: "Sep 14", phase: 3, mileage: 60, days: { mon: LIFT_PUSH, tue: INTERVAL_1K, wed: LIFT_PULL, thu: EASY_Z2(12), fri: LIFT_FULL, sat: LONG_RUN(34, 22), sun: WALK }, peak: true },
+  { n: 23, start: "Sep 21", phase: 3, mileage: 47, days: { mon: LIFT_PULL, tue: TEMPO(8), wed: REST, thu: EASY_Z2(10), fri: REST, sat: LONG_RUN(26, 23), sun: WALK }, taper: 1 },
+  { n: 24, start: "Sep 28", phase: 3, mileage: 37, days: { mon: REST, tue: TEMPO(6), wed: REST, thu: EASY_Z2(8), fri: REST, sat: LONG_RUN(20, 24), sun: WALK }, taper: 2 },
+  { n: 25, start: "Oct 05", phase: 3, mileage: 25, days: { mon: REST, tue: EASY_Z2(6), wed: REST, thu: EASY_Z2(5), fri: REST, sat: LONG_RUN(14, 25), sun: WALK }, taper: 3 },
+  { n: 26, start: "Oct 12", phase: 3, mileage: 42.195, days: { mon: WALK, tue: EASY_Z2(4), wed: REST, thu: SHAKEOUT, fri: REST, sat: REST, sun: RACE_DAY }, race: true }
+];
+
+const PHASES = {
+  1: { name: "Base Build", range: "Weeks 1–8", sub: "Apr → Jun" },
+  2: { name: "Build Block", range: "Weeks 9–20", sub: "Jun → Sep" },
+  3: { name: "Peak → Race", range: "Weeks 21–26", sub: "Sep → Oct" }
+};
+
+// ========= WEEKLY SCHEDULE (the life week, not training) =========
+const weekSchedule = {
+  mon: [
+    { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
+    { time: "06:30", tag: "Train", body: "See Training section for today's workout", cls: "tb-train" },
+    { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
+    { time: "09:00", tag: "RODA", body: "20 personalised outreaches · track in HubSpot", cls: "tb-roda" },
+    { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
+    { time: "13:00", tag: "RODA", body: "Delivery · proposals · client work", cls: "tb-roda" },
+    { time: "15:00", tag: "Learn", body: "RevOps deep work · 90 min", cls: "tb-learn" },
+    { time: "17:00", tag: "Walk", body: "Recovery walk · 30 min", cls: "" },
+    { time: "18:00", tag: "Dinner", body: "Cook + eat with Catarina", cls: "tb-couple" },
+    { time: "19:30", tag: "Together", body: "1 hr couple time · no phones", cls: "tb-couple" },
+    { time: "21:00", tag: "Read", body: "Non-fiction · KITCHEN CLOSED", cls: "" },
+    { time: "22:00", tag: "Wind-down", body: "No screens · plan tomorrow", cls: "tb-sleep" },
+    { time: "22:30", tag: "Lights Out", body: "Non-negotiable", cls: "tb-sleep" }
+  ],
+  tue: [
+    { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
+    { time: "06:30", tag: "Run", body: "Easy Z2 or intervals — see Training", cls: "tb-train" },
+    { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
+    { time: "09:00", tag: "RODA", body: "20 outreaches · track in HubSpot", cls: "tb-roda" },
+    { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
+    { time: "13:00", tag: "RODA", body: "Client work · proposals", cls: "tb-roda" },
+    { time: "15:00", tag: "Learn", body: "Sales training · 90 min", cls: "tb-learn" },
+    { time: "17:00", tag: "Walk", body: "Recovery walk · 30 min", cls: "" },
+    { time: "18:00", tag: "Dinner", body: "Cook + eat with Catarina", cls: "tb-couple" },
+    { time: "19:30", tag: "Together", body: "1 hr couple time · no phones", cls: "tb-couple" },
+    { time: "21:00", tag: "Read", body: "Non-fiction · KITCHEN CLOSED", cls: "" },
+    { time: "22:30", tag: "Lights Out", body: "Non-negotiable", cls: "tb-sleep" }
+  ],
+  wed: [
+    { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
+    { time: "06:30", tag: "Lift", body: "Pull day — see Training", cls: "tb-train" },
+    { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
+    { time: "09:00", tag: "RODA", body: "20 outreaches · track in HubSpot", cls: "tb-roda" },
+    { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
+    { time: "13:00", tag: "RODA", body: "Client work · proposals", cls: "tb-roda" },
+    { time: "15:00", tag: "Learn", body: "RevOps deep work · 90 min", cls: "tb-learn" },
+    { time: "17:00", tag: "Walk", body: "Recovery walk · 30 min", cls: "" },
+    { time: "18:00", tag: "Dinner", body: "Cook + eat with Catarina", cls: "tb-couple" },
+    { time: "19:30", tag: "Together", body: "1 hr couple time · no phones", cls: "tb-couple" },
+    { time: "21:00", tag: "Read", body: "Non-fiction · KITCHEN CLOSED", cls: "" },
+    { time: "22:30", tag: "Lights Out", body: "Non-negotiable", cls: "tb-sleep" }
+  ],
+  thu: [
+    { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
+    { time: "06:30", tag: "Run", body: "Easy Z2 or tempo — see Training", cls: "tb-train" },
+    { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
+    { time: "09:00", tag: "RODA", body: "20 outreaches · track in HubSpot", cls: "tb-roda" },
+    { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
+    { time: "13:00", tag: "RODA", body: "Client work · proposals", cls: "tb-roda" },
+    { time: "15:00", tag: "Learn", body: "Sales training · 90 min", cls: "tb-learn" },
+    { time: "17:00", tag: "Walk", body: "Recovery walk · 30 min", cls: "" },
+    { time: "18:00", tag: "Dinner", body: "Cook + eat with Catarina", cls: "tb-couple" },
+    { time: "19:30", tag: "Together", body: "1 hr couple time · no phones", cls: "tb-couple" },
+    { time: "21:00", tag: "Read", body: "Non-fiction · KITCHEN CLOSED", cls: "" },
+    { time: "22:30", tag: "Lights Out", body: "Non-negotiable", cls: "tb-sleep" }
+  ],
+  fri: [
+    { time: "06:00", tag: "Wake", body: "Water · 5 min breathwork · mobility", cls: "tb-train" },
+    { time: "06:30", tag: "Lift", body: "Full body — see Training", cls: "tb-train" },
+    { time: "08:00", tag: "Fuel", body: "Protein breakfast · zero sugar", cls: "" },
+    { time: "09:00", tag: "RODA", body: "20 outreaches · track in HubSpot", cls: "tb-roda" },
+    { time: "12:00", tag: "Lunch", body: "Whole food · 30g protein", cls: "" },
+    { time: "13:00", tag: "RODA", body: "Client work · proposals", cls: "tb-roda" },
+    { time: "15:00", tag: "Admin", body: "RODA follow-ups · CRM hygiene", cls: "tb-roda" },
+    { time: "17:00", tag: "Walk", body: "Recovery walk · 30 min", cls: "" },
+    { time: "18:00", tag: "Dinner", body: "Cook + eat with Catarina", cls: "tb-couple" },
+    { time: "19:30", tag: "Together", body: "1 hr couple time · no phones", cls: "tb-couple" },
+    { time: "21:00", tag: "Read", body: "Non-fiction · KITCHEN CLOSED", cls: "" },
+    { time: "22:30", tag: "Lights Out", body: "Before midnight", cls: "tb-sleep" }
+  ],
+  sat: [
+    { time: "07:30", tag: "Wake", body: "Slower morning · long run prep", cls: "tb-sleep" },
+    { time: "08:00", tag: "Long Run", body: "The key session — see Training", cls: "tb-train" },
+    { time: "11:00", tag: "Brunch", body: "Refuel · protein + carbs · with C", cls: "tb-couple" },
+    { time: "12:30", tag: "Lunch out", body: "Madrid · with Catarina", cls: "tb-couple" },
+    { time: "14:00", tag: "Free", body: "Rest · hobbies · social", cls: "" },
+    { time: "17:00", tag: "Mission", body: "2 hrs kids' financial literacy work", cls: "tb-learn" },
+    { time: "19:00", tag: "Dinner", body: "Out · friends · or with C", cls: "tb-couple" },
+    { time: "22:30", tag: "Lights Out", body: "Non-negotiable", cls: "tb-sleep" }
+  ],
+  sun: [
+    { time: "07:30", tag: "Wake", body: "Recovery · no alarm needed", cls: "tb-sleep" },
+    { time: "08:30", tag: "Breakfast", body: "Slow breakfast with Catarina", cls: "tb-couple" },
+    { time: "10:00", tag: "Walk", body: "Together · Madrid · no phones", cls: "tb-couple" },
+    { time: "12:00", tag: "Lunch", body: "Light · pre-review", cls: "" },
+    { time: "13:00", tag: "Review", body: "Weekly audit · outreaches · health · money · relationships", cls: "tb-roda" },
+    { time: "15:00", tag: "Plan", body: "Next week's Mon–Sun blueprint", cls: "tb-roda" },
+    { time: "17:00", tag: "Free", body: "Open · call Marta · family", cls: "" },
+    { time: "19:00", tag: "Dinner", body: "Home · with C", cls: "tb-couple" },
+    { time: "20:30", tag: "Read", body: "Journal · prep mind for Monday", cls: "" },
+    { time: "22:30", tag: "Lights Out", body: "Non-negotiable", cls: "tb-sleep" }
+  ]
+};
+
+/* ================= RENDER ================= */
+
+function renderWorkout(workout, dayName) {
+  if (workout.rest) {
+    return `
+      <div class="rest-day-card">
+        <div class="rest-title">${workout.title}</div>
+        <div class="rest-sub">${dayName}</div>
+        <div class="rest-body">${workout.body}</div>
+      </div>
+    `;
+  }
+
+  if (workout.type === 'run' || workout.type === 'race') {
+    const runHtml = workout.runBlocks ? workout.runBlocks.map(b => `
+      <div class="run-block">
+        <div class="rb-label">${b.label}</div>
+        <div class="rb-title">${b.title}</div>
+        ${b.detail ? `<div class="rb-detail">${b.detail}</div>` : ''}
+      </div>
+    `).join('') : '';
+
+    const groupsHtml = workout.groups ? workout.groups.map(g => `
+      <div class="ex-group">
+        <div class="ex-group-title">${g.title}</div>
+        ${g.items.map((it, i) => `
+          <div class="ex">
+            <div class="ex-num">${String(i+1).padStart(2, '0')}</div>
+            <div class="ex-main">
+              <div class="ex-name">${it.name}</div>
+              ${it.note ? `<div class="ex-note">${it.note}</div>` : ''}
+            </div>
+            <div class="ex-sets">${it.sets}</div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('') : '';
+
+    return `
+      <div class="workout-card">
+        <div class="wo-day">${dayName}</div>
+        <div class="wo-title">${workout.name}</div>
+        <div class="wo-type">${workout.type === 'race' ? '★ RACE' : 'Running'}</div>
+        <div class="wo-quick">
+          <div class="quick-stat"><div class="v">${workout.focus.split('·')[0].trim()}</div><div class="l">Distance</div></div>
+          <div class="quick-stat"><div class="v">${workout.duration}</div><div class="l">Duration</div></div>
+        </div>
+        ${runHtml}
+        ${groupsHtml}
+        ${workout.note ? `<div class="coach-note">${workout.note}</div>` : ''}
+      </div>
+    `;
+  }
+
+  // Strength
+  return `
+    <div class="workout-card">
+      <div class="wo-day">${dayName}</div>
+      <div class="wo-title">${workout.name}</div>
+      <div class="wo-type">Strength · ${workout.focus}</div>
+      <div class="wo-quick">
+        <div class="quick-stat"><div class="v">${workout.duration}</div><div class="l">Duration</div></div>
+        <div class="quick-stat"><div class="v">${workout.groups.reduce((s, g) => s + g.items.length, 0)}</div><div class="l">Exercises</div></div>
+      </div>
+      ${workout.groups.map(g => `
+        <div class="ex-group">
+          <div class="ex-group-title">${g.title}</div>
+          ${g.items.map((it, i) => `
+            <div class="ex">
+              <div class="ex-num">${String(i+1).padStart(2, '0')}</div>
+              <div class="ex-main">
+                <div class="ex-name">${it.name}</div>
+                ${it.note ? `<div class="ex-note">${it.note}</div>` : ''}
+              </div>
+              <div class="ex-sets">${it.sets}</div>
+            </div>
+          `).join('')}
+        </div>
+      `).join('')}
+      ${workout.note ? `<div class="coach-note">${workout.note}</div>` : ''}
+    </div>
+  `;
+}
+
+function renderWeekdaySchedule(day) {
+  const sched = weekSchedule[day];
+  const dayFullName = { mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday' }[day];
+
+  return `
+    <div class="workout-card" style="border-left-color: var(--gold);">
+      <div class="wo-day" style="color: var(--gold);">${dayFullName}</div>
+      <div class="wo-title" style="margin-bottom: 18px;">The shape of the day</div>
+      ${sched.map(s => `
+        <div class="time-block">
+          <div class="tb-time">${s.time}</div>
+          <div class="tb-content">
+            <div class="tb-tag ${s.cls}">${s.tag}</div>
+            <div class="tb-body">${s.body}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+/* ================= STATE ================= */
+
+let currentWeek = 1;
+let currentDay = 'sat';
+
+// Auto-select current week based on today's date
+function computeCurrentWeek() {
+  const today = new Date();
+  if (today < START_DATE) return 1;
+  const diff = today - START_DATE;
+  const w = Math.floor(diff / (1000 * 60 * 60 * 24 * 7)) + 1;
+  return Math.max(1, Math.min(26, w));
+}
+
+function populateWeekSelect() {
+  const sel = document.getElementById('weekSelect');
+  sel.innerHTML = weeks.map(w => {
+    let tag = '';
+    if (w.cutback) tag = ' · cutback';
+    if (w.peak) tag = ' · PEAK';
+    if (w.taper) tag = ` · taper ${w.taper}`;
+    if (w.race) tag = ' · RACE WEEK';
+    return `<option value="${w.n}">Week ${String(w.n).padStart(2,'0')} · ${w.start} · ${w.mileage}km${tag}</option>`;
+  }).join('');
+}
+
+function updatePhaseBanner() {
+  const w = weeks.find(wk => wk.n === currentWeek);
+  const p = PHASES[w.phase];
+  document.getElementById('phase-num').textContent = String(w.phase).padStart(2, '0');
+  document.getElementById('phase-name').textContent = p.name;
+  document.getElementById('phase-range').textContent = p.range;
+}
+
+function updateDayChips() {
+  document.querySelectorAll('.day-chip').forEach(chip => {
+    chip.classList.toggle('active', chip.dataset.day === currentDay);
+    // Mark rest days
+    const w = weeks.find(wk => wk.n === currentWeek);
+    const workout = w.days[chip.dataset.day];
+    chip.classList.toggle('rest', workout && workout.rest);
+  });
+}
+
+function renderCurrent() {
+  const w = weeks.find(wk => wk.n === currentWeek);
+  const workout = w.days[currentDay];
+  const dayName = { mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday' }[currentDay];
+  const dayFull = `Week ${String(w.n).padStart(2,'0')} · ${dayName}`;
+
+  document.getElementById('workoutContainer').innerHTML = renderWorkout(workout, dayFull);
+  updateDayChips();
+  updatePhaseBanner();
+}
+
+/* ================= EVENTS ================= */
+
+// Pills nav
+document.querySelectorAll('.pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    pill.classList.add('active');
+    document.getElementById('section-' + pill.dataset.section).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// Week select
+document.getElementById('weekSelect').addEventListener('change', (e) => {
+  currentWeek = parseInt(e.target.value);
+  renderCurrent();
+});
+
+// Day chips
+document.querySelectorAll('.day-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    currentDay = chip.dataset.day;
+    renderCurrent();
+  });
+});
+
+// Weekday (life schedule) select
+document.getElementById('weekdaySelect').addEventListener('change', (e) => {
+  document.getElementById('weekdayContainer').innerHTML = renderWeekdaySchedule(e.target.value);
+});
+
+/* ================= INIT ================= */
+
+populateWeekSelect();
+currentWeek = computeCurrentWeek();
+document.getElementById('weekSelect').value = currentWeek;
+
+// Set current day to today's day of week
+const todayDow = new Date().getDay();
+const dayMap = ['sun','mon','tue','wed','thu','fri','sat'];
+currentDay = dayMap[todayDow];
+
+renderCurrent();
+document.getElementById('weekdayContainer').innerHTML = renderWeekdaySchedule(currentDay === 'sun' ? 'mon' : currentDay);
+document.getElementById('weekdaySelect').value = currentDay === 'sun' ? 'mon' : currentDay;
+
+// Countdown
+function updateCountdown() {
+  const today = new Date();
+  const diff = RACE_DATE - today;
+  const days = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+  const weeksLeft = Math.max(0, Math.ceil(days / 7));
+  document.getElementById('days').textContent = days;
+  document.getElementById('weeks').textContent = weeksLeft;
+  document.getElementById('currentWeek').textContent = 'W' + currentWeek;
+}
+updateCountdown();
+</script>
+</body>
+</html>
